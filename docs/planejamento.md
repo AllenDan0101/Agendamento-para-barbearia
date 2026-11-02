@@ -46,6 +46,7 @@ Aplicação web para uma barbearia gerenciar clientes, o catálogo de serviços 
 - Excluir serviço é definitivo e só vale se ele nunca foi usado. Caso contrário, a operação correta é inativar.
 - Inativar cliente, serviço ou usuário com agendamento futuro em aberto é recusado até o cancelamento desses horários.
 - Não é possível inativar o próprio usuário nem remover o último administrador ativo.
+- O cadastro aberto na tela de login grava sempre o papel atendente. Pedido de administrador nesse corpo é ignorado. Administrador continua nascendo só pela rota autenticada de usuários.
 
 ---
 
@@ -63,6 +64,7 @@ Aplicação web para uma barbearia gerenciar clientes, o catálogo de serviços 
 | RF08 | Remarcar, cancelar ou concluir Agendamento | `PUT` e `PATCH .../cancelar` e `.../concluir` |
 | RF09 | Impedir sobreposição de horário para o mesmo atendente | `AgendamentoService` + `intervalosConflitam` |
 | RF10 | Restringir operações conforme o papel | middleware `somenteAdmin` e regras no service |
+| RF11 | Cadastro público cria somente atendente, com e-mail único | `POST /api/auth/cadastro` e `UsuarioService.cadastrarPublico` |
 
 ## 3. Requisitos não funcionais
 

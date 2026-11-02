@@ -79,4 +79,67 @@ describe('API de autenticação', () => {
     const token = await tokenDe(ambiente.app, 'admin@teste.local', 'admin123');
     expect(token.split('.')).toHaveLength(3);
   });
+
+  it('cadastra um atendente, entra com o token e ignora pedido de papel admin', async () => {
+    ambiente = await subir();
+    const resposta = await request(ambiente.app).post('/api/auth/cadastro').send({
+      nome: 'Marina Costa',
+      email: 'marina@teste.local',
+      senha: 'senha123',
+      confirmacaoSenha: 'senha123',
+      papel: 'ADMIN',
+    });
+    expect(resposta.status).toBe(201);
+    expect(resposta.body.usuario.papel).toBe('ATENDENTE');
+    expect(resposta.body.usuario.email).toBe('marina@teste.local');
+    expect(resposta.body.usuario.senhaHash).toBeUndefined();
+    expect(typeof resposta.body.token).toBe('string');
+
+    const eu = await request(ambiente.app)
+      .get('/api/auth/me')
+      .set('Authorization', `Bearer ${resposta.body.token}`);
+    expect(eu.status).toBe(200);
+    expect(eu.body.papel).toBe('ATENDENTE');
+
+    const proibido = await request(ambiente.app)
+      .get('/api/usuarios')
+      .set('Authorization', `Bearer ${resposta.body.token}`);
+    expect(proibido.status).toBe(403);
+  });
+
+  it('recusa cadastro com e-mail duplicado', async () => {
+    ambiente = await subir();
+    const corpo = {
+      nome: 'Marina Costa',
+      email: 'marina@teste.local',
+      senha: 'senha123',
+      confirmacaoSenha: 'senha123',
+    };
+    const primeiro = await request(ambiente.app).post('/api/auth/cadastro').send(corpo);
+    expect(primeiro.status).toBe(201);
+    const duplicado = await request(ambiente.app).post('/api/auth/cadastro').send(corpo);
+    expect(duplicado.status).toBe(409);
+    expect(duplicado.body.erro).toMatch(/e-mail/i);
+  });
+
+  it('recusa cadastro com dados inválidos', async () => {
+    ambiente = await subir();
+    const incompleto = await request(ambiente.app).post('/api/auth/cadastro').send({
+      nome: 'A',
+      email: 'nao-e-email',
+      senha: '123',
+    });
+    expect(incompleto.status).toBe(400);
+    expect(incompleto.body.erro).toBe('Dados inválidos');
+    expect(incompleto.body.detalhes.length).toBeGreaterThan(0);
+
+    const divergente = await request(ambiente.app).post('/api/auth/cadastro').send({
+      nome: 'Marina Costa',
+      email: 'marina@teste.local',
+      senha: 'senha123',
+      confirmacaoSenha: 'outra123',
+    });
+    expect(divergente.status).toBe(400);
+    expect(JSON.stringify(divergente.body.detalhes)).toMatch(/não confere/);
+  });
 });

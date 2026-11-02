@@ -4,6 +4,7 @@ import { ProtectedRoute } from './components/layout/ProtectedRoute';
 import { AgendaPage } from './pages/AgendaPage';
 import { ClientesPage } from './pages/ClientesPage';
 import { HomePage } from './pages/HomePage';
+import { CadastroPage } from './pages/CadastroPage';
 import { LoginPage } from './pages/LoginPage';
 import { ServicosPage } from './pages/ServicosPage';
 import { UsuariosPage } from './pages/UsuariosPage';
@@ -12,6 +13,7 @@ export function App() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/cadastro" element={<CadastroPage />} />
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route path="/" element={<HomePage />} />

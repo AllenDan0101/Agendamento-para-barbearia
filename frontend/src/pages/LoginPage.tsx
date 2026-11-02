@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { mensagemDeErro } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
 import { Alert } from '../components/ui/Chrome';
@@ -67,6 +67,9 @@ export function LoginPage() {
           <Button type="submit" carregando={enviando}>
             Acessar a agenda
           </Button>
+          <Link className="btn btn-secondary btn-block" to="/cadastro">
+            Cadastre-se
+          </Link>
           <div className="demo-box">
             <strong>Demonstração</strong>
             <br />

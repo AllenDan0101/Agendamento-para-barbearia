@@ -83,6 +83,19 @@ Nada do escopo comprometido foi cortado. O que permanece de fora está na seçã
 
 ---
 
+## Depois da avaliação por pares
+
+Cinco colegas (Luiz Henrique Schrting, Juliana Costa, Marcos Vinícius Souza, Beatriz Lima e André Felipe Rocha) apontaram a falta de cadastro na tela inicial. O item abaixo entrou na mesma entrega. As outras sugestões foram citadas como não testadas ou ausentes e ficam para um ciclo seguinte.
+
+| ID | História | Prioridade | Pts | Situação |
+|----|----------|------------|-----|----------|
+| BK19 | Cadastro público de atendente na tela de login (`POST /api/auth/cadastro`) | Alta | 5 | Entregue |
+| BK20 | Relatórios e histórico de clientes | Baixa | 5 | Backlog futuro |
+| BK21 | Notificações e lembretes | Baixa | 5 | Backlog futuro |
+| BK22 | Pagamentos e integração com WhatsApp | Baixa | 8 | Backlog futuro |
+
+---
+
 ## Ordem em que o código foi organizado
 
 O histórico Git desta entrega separa API, interface e documentação. A ordem sugerida no rascunho (vários pull requests por história) foi concentrada neste incremento para a banca avaliar o sistema inteiro.

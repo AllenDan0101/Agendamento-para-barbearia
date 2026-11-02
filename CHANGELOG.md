@@ -2,6 +2,18 @@
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
+## [1.1.0] - 2026-11-02
+
+### Adicionado
+
+- Tela pública “Cadastre-se” a partir do login, com nome, e-mail, senha e confirmação de senha.
+- `POST /api/auth/cadastro`, validado com Zod. O usuário nasce atendente, com senha em hash. E-mail repetido responde 409. Depois do cadastro a sessão já entra.
+- Testes de service e de API do cadastro: sucesso, e-mail duplicado, dados inválidos e papel fixo em atendente.
+
+### Não incluído
+
+- Relatórios e histórico de clientes, notificações e lembretes, pagamentos e integração com WhatsApp permanecem no backlog futuro, a partir da avaliação por pares.
+
 ## [1.0.0] - 2026-11-02
 
 ### Adicionado

@@ -222,6 +222,7 @@ a { color: inherit; }
 .btn-ghost { background: transparent; color: inherit; }
 .btn-danger { background: var(--wine-soft); color: var(--wine); }
 .btn-small { padding: 6px 10px; font-size: 0.86rem; }
+.btn-block { width: 100%; }
 .sidebar .btn-ghost { color: #f4ecdf; justify-content: flex-start; padding-left: 0; }
 
 .field { display: flex; flex-direction: column; gap: 6px; }

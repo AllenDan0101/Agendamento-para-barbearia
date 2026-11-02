@@ -11,7 +11,7 @@ import {
   listarAgendamentosSchema,
   remarcarAgendamentoSchema,
 } from '../schemas/agendamento.schema';
-import { loginSchema } from '../schemas/auth.schema';
+import { cadastroSchema, loginSchema } from '../schemas/auth.schema';
 import {
   atualizarClienteSchema,
   criarClienteSchema,
@@ -33,7 +33,7 @@ import type { Dependencias } from '../composition';
 export function criarRotas(deps: Dependencias): Router {
   const router = Router();
   const exigir = criarAutenticar(deps.repositorios.usuarios);
-  const auth = new AuthController(deps.authService);
+  const auth = new AuthController(deps.authService, deps.usuarioService);
   const usuarios = new UsuarioController(deps.usuarioService);
   const clientes = new ClienteController(deps.clienteService);
   const servicos = new ServicoController(deps.servicoService);
@@ -44,6 +44,7 @@ export function criarRotas(deps: Dependencias): Router {
   });
 
   router.post('/auth/login', validar(loginSchema), auth.login);
+  router.post('/auth/cadastro', validar(cadastroSchema), auth.cadastrar);
   router.post('/auth/logout', exigir, auth.logout);
   router.get('/auth/me', exigir, auth.eu);
 

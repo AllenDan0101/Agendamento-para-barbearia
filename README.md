@@ -21,6 +21,7 @@ A equipe da barbearia entra com e-mail e senha. Administrador e atendente cadast
 ## Funcionalidades
 
 - Login, consulta da sessão e logout
+- Cadastro público em “Cadastre-se”: cria sempre um atendente, nunca um administrador, e entra na agenda em seguida
 - Usuários (administrador): cadastro, edição, inativação, papéis admin e atendente
 - Clientes: cadastro, edição, busca, inativação
 - Serviços: nome, duração, preço, ativar/inativar, excluir se nunca foi usado
@@ -147,11 +148,12 @@ Modelo em `.env.example`.
 
 ## API (resumo)
 
-Todas as rotas, exceto `GET /api/saude` e `POST /api/auth/login`, exigem `Authorization: Bearer <token>`.
+Todas as rotas, exceto `GET /api/saude`, `POST /api/auth/login` e `POST /api/auth/cadastro`, exigem `Authorization: Bearer <token>`.
 
 | Método | Caminho | Quem |
 |--------|---------|------|
 | POST | `/api/auth/login` | público |
+| POST | `/api/auth/cadastro` | público; o papel gravado é sempre atendente |
 | POST | `/api/auth/logout` | autenticado |
 | GET | `/api/auth/me` | autenticado |
 | GET, POST, PUT, PATCH | `/api/usuarios` | admin |

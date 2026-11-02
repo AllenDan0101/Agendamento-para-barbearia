@@ -85,7 +85,7 @@ Exemplo concreto, criar agendamento:
 
 O controller não calcula conflito nem hash de senha. `AuthController.login` chama `AuthService.entrar` e devolve 200. `AgendamentoController` escolhe 201 na criação e repassa o corpo. Status de negócio (401, 403, 404, 409, 422) nascem como `AppError` no service e são serializados em `backend/src/middlewares/error-handler.ts` no formato `{ erro, detalhes? }`.
 
-As rotas ficam num único mapa, `backend/src/routes/index.ts`, para a ordem dos middlewares ficar visível: saúde e login são públicos; o restante exige token; usuários e escrita de serviços exigem `somenteAdmin`.
+As rotas ficam num único mapa, `backend/src/routes/index.ts`, para a ordem dos middlewares ficar visível: saúde, login e cadastro público são abertos; o restante exige token; usuários e escrita de serviços exigem `somenteAdmin`. O cadastro público chama `UsuarioService.cadastrarPublico`, que fixa o papel em atendente antes de gravar o hash.
 
 ## 5. Service
 

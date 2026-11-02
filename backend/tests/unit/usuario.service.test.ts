@@ -55,4 +55,32 @@ describe('UsuarioService', () => {
     expect(listagem.find((usuario) => usuario.id === admin.id)?.ativo).toBe(false);
     expect(listagem.every((usuario) => !('senhaHash' in usuario))).toBe(true);
   });
+
+  it('cadastra atendimento público sempre como atendente e recusa e-mail duplicado', async () => {
+    ambiente = await ambienteDeServico();
+    const criado = await ambiente.usuarioService.cadastrarPublico({
+      nome: 'Marina Costa',
+      email: 'Marina@teste.local',
+      senha: 'senha123',
+    });
+    expect(criado.papel).toBe('ATENDENTE');
+    expect(criado.email).toBe('marina@teste.local');
+    expect(criado).not.toHaveProperty('senhaHash');
+
+    const gravado = await ambiente.repositorios.usuarios.buscarPorEmail('marina@teste.local');
+    expect(gravado?.papel).toBe('ATENDENTE');
+    expect(gravado?.senhaHash).not.toBe('senha123');
+    expect(gravado?.senhaHash.startsWith('$2')).toBe(true);
+
+    const sessao = await ambiente.authService.entrar('marina@teste.local', 'senha123');
+    expect(sessao.usuario.papel).toBe('ATENDENTE');
+
+    await expect(
+      ambiente.usuarioService.cadastrarPublico({
+        nome: 'Outra Marina',
+        email: 'marina@teste.local',
+        senha: 'senha123',
+      }),
+    ).rejects.toMatchObject({ status: 409 });
+  });
 });

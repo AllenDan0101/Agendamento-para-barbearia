@@ -2,10 +2,18 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 import { api, tokenStorage } from '../api/client';
 import type { Usuario } from '../api/tipos';
 
+type DadosCadastro = {
+  nome: string;
+  email: string;
+  senha: string;
+  confirmacaoSenha: string;
+};
+
 type Sessao = {
   usuario: Usuario | null;
   carregando: boolean;
   entrar: (email: string, senha: string) => Promise<void>;
+  cadastrar: (dados: DadosCadastro) => Promise<void>;
   sair: () => Promise<void>;
 };
 
@@ -40,6 +48,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const sessao = await api<{ token: string; usuario: Usuario }>('/api/auth/login', {
           method: 'POST',
           body: JSON.stringify({ email, senha }),
+        });
+        tokenStorage.gravar(sessao.token);
+        setUsuario(sessao.usuario);
+      },
+      async cadastrar(dados: DadosCadastro) {
+        const sessao = await api<{ token: string; usuario: Usuario }>('/api/auth/cadastro', {
+          method: 'POST',
+          body: JSON.stringify(dados),
         });
         tokenStorage.gravar(sessao.token);
         setUsuario(sessao.usuario);

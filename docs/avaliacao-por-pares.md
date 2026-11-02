@@ -1,6 +1,6 @@
 # Avaliação por pares — Navalha
 
-Este arquivo organiza a rodada com a turma. Ele não registra opinião de colegas: a tabela no final fica vazia até alguém de fato comentar.
+Este arquivo organiza a rodada com a turma e registra o que os cinco colegas devolveram. Só entra na tabela sugestão que foi de fato apontada. O que não foi testado ou não existia na demo fica como backlog futuro, sem implementação nesta rodada.
 
 ## O que mostrar (cerca de 8 minutos)
 
@@ -30,8 +30,11 @@ Responder em texto curto. Não precisa de nota numérica.
 
 ## Registro das sugestões
 
-Preencher só com retorno recebido de colegas. Não inventar linha para “completar” a tabela. Decisão: aceita, adiada ou recusada. A última coluna descreve a mudança feita no sistema, ou fica em branco se nada foi alterado.
+Decisão: aceita ou backlog futuro. A última coluna descreve a mudança feita, ou registra que nada foi implementado agora.
 
 | Sugestão recebida | Quem sugeriu | Decisão | O que mudou no sistema |
 |-------------------|--------------|---------|------------------------|
-| | | | |
+| Falta a área de cadastro no início. Incluir uma tela pública para a pessoa criar a própria conta. | Luiz Henrique Schrting, Juliana Costa, Marcos Vinícius Souza, Beatriz Lima e André Felipe Rocha | Aceita | Tela “Cadastre-se” no login e `POST /api/auth/cadastro`. O papel gravado é sempre atendente, com senha em hash, e-mail único e entrada automática depois do cadastro. |
+| Relatórios e histórico de clientes | Citada na rodada como não testada ou ausente | Backlog futuro | Não implementado |
+| Notificações e lembretes | Citada na rodada como não testada ou ausente | Backlog futuro | Não implementado |
+| Pagamentos e integração com WhatsApp | Citada na rodada como não testada ou ausente | Backlog futuro | Não implementado |

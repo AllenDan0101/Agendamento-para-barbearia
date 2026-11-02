@@ -32,6 +32,15 @@ export class UsuarioService {
     return semSenha(usuario);
   }
 
+  async cadastrarPublico(dados: { nome: string; email: string; senha: string }): Promise<UsuarioPublico> {
+    return this.criar({
+      nome: dados.nome,
+      email: dados.email,
+      senha: dados.senha,
+      papel: 'ATENDENTE',
+    });
+  }
+
   async criar(dados: DadosUsuario & { senha: string }): Promise<UsuarioPublico> {
     const email = normalizarEmail(dados.email);
     if (!email) throw new AppError(422, 'Informe o e-mail');
