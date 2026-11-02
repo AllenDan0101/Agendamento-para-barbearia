@@ -1,0 +1,8 @@
+services:
+  api:
+    environment:
+      DATABASE_DRIVER: postgres
+      DATABASE_URL: postgres://barbearia:barbearia@postgres:5432/barbearia
+    depends_on:
+      postgres:
+        condition: service_healthy
